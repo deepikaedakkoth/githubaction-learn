@@ -1,0 +1,33 @@
+## Github Action for web api deployment
+
+name: Deploy Web API
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Install dependencies
+        run: dotnet restore ./SampleWebApi/SampleWebApi.csproj
+
+      - name: Build
+        run: dotnet build ./SampleWebApi/SampleWebApi.csproj --configuration Release --no-restore
+
+      - name: Publish
+        run: dotnet publish ./SampleWebApi/SampleWebApi.csproj --configuration Release --no-build --output ./publish --no-build
