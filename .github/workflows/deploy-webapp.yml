@@ -32,7 +32,7 @@ jobs:
         run: dotnet publish ./SampleWebApi/SampleWebApi.csproj --configuration Release --no-build --output ./publish --no-build
 
       - name: Upload publish output
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: webapi-artifact
           path: ./publish
